@@ -1,6 +1,3 @@
-from heapq import heapify
-
-
 def HeapSort(T):
     n = len(T)
     for i in range(n//2 - 1, -1, -1):
