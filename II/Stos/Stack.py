@@ -1,36 +1,38 @@
+
 class Stack:
     def __init__(self, MAX_SIZE):
         self.MAX_SIZE = MAX_SIZE
         self.array = [None] * MAX_SIZE
-
-    # returns index of last element
-    def topIndex(self):
-        i = 0
-        if self.array[i] == None:
-            return print("Stack is empty!")
-        while self.array[i] != None:
-            if i < self.MAX_SIZE - 1:
-                i += 1
-            else:
-                return self.MAX_SIZE
-        return i - 1
-
-    def remove(self):
-        if self.topIndex() == -1:
-            print("Stack is empty!")
-        else:
-            value = self.array[self.topIndex()]
-            self.array[self.topIndex()] = None
-            return value
+        self.tail = 0
 
     def add(self, value):
-        if self.topIndex() == self.MAX_SIZE:  # -1
-            print("Stack is full")
-        else:
-            self.array[self.topIndex() + 1] = value
+        if self.tail == self.MAX_SIZE:
+            return print("Stack is full!")
+
+        self.array[self.tail] = value
+
+        self.tail += 1
+        return
+
+    def remove(self):
+        if self.tail == 0:
+            return print("Stack is empty!")
+
+        value = 0
+        value = self.array[self.tail-1]
+        self.array[self.tail-1] = None
+
+        self.tail -= 1
+
+        return int(value)
+
+    def topIndex(self):
+        if self.tail == 0:
+            return print("Stack is empty!")
+        return self.array[self.tail-1]
 
 
-first = Stack(3)
+first = Stack(1)
 
 run = True
 while run:
@@ -44,15 +46,13 @@ while run:
         number = int(input("Enter a value to enqueue: "))
         first.add(number)
     elif choice == 2:
-        first.remove()
-        if type(first.remove()) is int:
-            print(f"Removed element: {first.remove()}")
+        removed = first.remove()
+        if type(removed) is int:
+            print(f"Removed element: {removed}")
     elif choice == 3:
-        number = input("Enter value which you are looking for:")
-        if type(first.topIndex(number)) is int:
-            print(f"On the top of the stack is {first.topIndex(number)+1} ")
-        else:
-            first.topIndex(number)
+        top = first.topIndex()
+        if type(top) is int:
+            print(f"On the top of the stack is {top} ")
 
     elif choice == 4:
         run = False
