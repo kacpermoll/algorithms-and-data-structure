@@ -14,8 +14,14 @@ def insertionSort(T):
         T[j+1] = temp
 
 
-T = [12, 11, 13, 5, 6]
+def main():
+    tab = [4, 9, 12, 2, 1, 7, 16, 3]
+    print("Przed sortowaniem:")
+    print(tab)
+    insertionSort(tab)
+    print("Po:")
+    print(tab)
 
-insertionSort(T)
-print("Sorted array is: ")
-print(*T, sep="*")
+
+if __name__ == '__main__':
+    main()

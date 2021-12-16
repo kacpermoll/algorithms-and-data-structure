@@ -21,3 +21,16 @@ def heapify(T, i, n):
     if largest != i:
         T[i], T[largest] = T[largest], T[i]
         heapify(T, largest, n)
+
+
+def main():
+    tab = [4, 9, 12, 2, 1, 7, 16, 3]
+    print("Przed sortowaniem:")
+    print(tab)
+    HeapSort(tab)
+    print("Po:")
+    print(tab)
+
+
+if __name__ == '__main__':
+    main()
