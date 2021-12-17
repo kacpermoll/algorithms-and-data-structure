@@ -1,35 +1,24 @@
+import time
+import random
+from heapq import heappush, heappop
+
+
 def HeapSort(T):
-    n = len(T)
-    for i in range(n//2 - 1, -1, -1):
-        heapify(T, i, n)
-    for i in range(n-1, 0, -1):
-        T[i], T[0] = T[0], T[i]
-        heapify(T, 0, i)
-    return T
-
-
-def heapify(T, i, n):
-    l = 2*i+1
-    r = 2*i+2
-
-    if l < n and T[l] > T[i]:
-        largest = r
-
-    if r < n and T[r] > T[l]:
-        largest = r
-
-    if largest != i:
-        T[i], T[largest] = T[largest], T[i]
-        heapify(T, largest, n)
+    heap = []
+    for value in T:
+        heappush(heap, value)
+    return [heappop(heap) for i in range(len(heap))]
 
 
 def main():
-    tab = [4, 9, 12, 2, 1, 7, 16, 3]
-    print("Przed sortowaniem:")
-    print(tab)
-    HeapSort(tab)
-    print("Po:")
-    print(tab)
+    tab = [random.randint(0, 100) for i in range(100000)]
+    # print("Przed sortowaniem:")
+    # print(tab)
+    start_time = time.time()
+    tab = HeapSort(tab)
+    print("--- %s seconds ---" % (round(time.time() - start_time, 10)))
+    # print("Po:")
+    # print(tab)
 
 
 if __name__ == '__main__':

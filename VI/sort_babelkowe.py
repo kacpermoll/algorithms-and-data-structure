@@ -1,3 +1,7 @@
+import time
+import random
+
+
 def bubbleSort(T):
     for i in range(0, len(T)):
         for j in range(0, len(T)-i-1):
@@ -6,12 +10,14 @@ def bubbleSort(T):
 
 
 def main():
-    tab = [4, 9, 12, 2, 1, 7, 16, 3]
-    print("Przed sortowaniem:")
-    print(tab)
+    tab = [random.randint(0, 100) for i in range(100000)]
+    # print("Przed sortowaniem:")
+    # print(tab)
+    start_time = time.time()
     bubbleSort(tab)
-    print("Po:")
-    print(tab)
+    print("--- %s seconds ---" % round(time.time() - start_time, 10))
+    # print("Po:")
+    # print(tab)
 
 
 if __name__ == '__main__':
