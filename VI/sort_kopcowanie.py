@@ -11,7 +11,7 @@ def HeapSort(T):
 
 
 def main():
-    tab = [random.randint(0, 100) for i in range(100)]
+    tab = [random.randint(0, 100) for i in range(100000)]
     # print("Przed sortowaniem:")
     # print(tab)
     start_time = time.time()
