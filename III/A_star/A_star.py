@@ -1,58 +1,72 @@
-import heapq
-import numpy
+import math
+from heapq import heappush, heappop
 
-graph = [[0, 5, 0, 1, 0, 0, 0, 0],
-         [0, 0, 2, 0, 1, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0, 0, 3],
-         [0, 0, 0, 0, 1, 2, 0, 0],
-         [0, 0, 4, 0, 0, 0, 0, 0],
-         [4, 0, 0, 0, 0, 0, 2, 0],
-         [0, 0, 0, 0, 1, 0, 0, 1],
-         [0, 0, 0, 0, 2, 0, 0, 0]]
-
+graph = [
+    [0, 5, 0, 1, 0, 0, 0, 0],
+    [0, 0, 2, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 1, 2, 0, 0],
+    [0, 0, 4, 0, 0, 0, 0, 0],
+    [4, 0, 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 1, 0, 0, 1],
+    [0, 0, 0, 0, 2, 0, 0, 0],
+]
 
 h = [4, 8, 3, 4, 5, 2, 1, 0]
 
-# Initializing empty sets
-# Q[] for "open" nodes
-# S[] for "closed" nodes
+# open nodes
 Q = []
+Q_nodes = []
+
+# closed nodes
 S = []
 
-nodes_in_Q = []
+# goal node
+end = 8
 
-u_node = None
+# predecessor node
+parent_node = None
+
 cost = 0
 g = []
 
-# pushing first node into Q
-heapq.heappush(Q, (h[0]+graph[0][0], 1))
-nodes_in_Q.append(1)
+# adding start node to the list with open nodes
+heappush(Q, (h[0] + graph[0][0], 1))
+Q_nodes.append(1)
 
+# default value of predecessors for all nodes
 pred = [0 for i in range(len(graph))]
 
 while Q:
-    # selecting from Q the node v with the smallest value of f(v)
-    u = heapq.heappop(Q)
+    parent = heappop(Q)
 
-    if u_node is not None:
-        cost += graph[u_node-1][u[1]-1]
-    u_node = u[1]
-    nodes_in_Q.remove(u_node)
-    S.append(u_node)
-
-    for i in range(0, len(graph[u_node-1])-1):
-        if graph[u_node-1][i] > 0:
-            if i+1 not in nodes_in_Q:
-                if i+1 not in S:
-                    heapq.heappush(Q, (graph[u_node-1][i]+h[i]+cost, i+1))
-                    g.append(graph[u_node-1][i]+cost)
-                    nodes_in_Q.append(i+1)
-                    pred[i] = u_node
-
-    if u_node == len(graph):
+    # finish if the parent_node is the goal node
+    if parent_node == end:
         break
 
-print(pred)
-print(S)
-print(g)
+    if parent_node is not None:
+        cost += graph[parent_node - 1][parent_node - 1]
+
+    parent_node = parent[1]
+    Q_nodes.remove(parent_node)
+    S.append(parent_node)
+
+    #
+    for child_index, value in enumerate(graph[parent_node - 1]):
+        # it is because nodes are countin from 1 and indexes in lists from 0
+        child_node = child_index + 1
+
+        # if the child_node is a neighbour the value (distance/cost) between them is not 0
+        if value is not 0:
+
+            # if the child_node is neither in S nor in Q, then
+            if not child_node in S and not child_node in Q_nodes:
+
+                # push the child_node to the Q (open list) with right cost
+                heappush(Q, (value + h[child_index] + cost, child_node))
+                g.append(value + cost)
+                Q_nodes.append(child_node)
+                pred[child_index] = parent_node
+
+
+print(f"pred: {pred}, S: {S}, g: {g}")
