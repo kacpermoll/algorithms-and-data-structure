@@ -1,1 +1,2 @@
-# algorithms-and-data-structure
+# Python implementations of algorithms such as:
+
